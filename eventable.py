@@ -1,3 +1,5 @@
+import logging
+
 class Eventable(object):
     """
     base class for object you want to handle events
@@ -10,7 +12,8 @@ class Eventable(object):
         """
         add a listener
         """
-        self.__handlers[event].setdefault(event,[]).append(handler)
+        logging.debug('adding handler: %s' % event)
+        self.__handlers.setdefault(event,[]).append(handler)
         return self
 
     def un(self,event,handler):
@@ -24,12 +27,14 @@ class Eventable(object):
                 pass # nothing to remove
         return self
 
-    def fire(self,event,args,**kwargs):
+    def fire(self,event,*args,**kwargs):
         """
         fire the event. aka call the handlers
         and pass them the args, kwargs
         """
+        logging.debug('firing %s' % event)
         for handler in self.__handlers.get(event,[]):
-            handler(args,**kwargs)
+            logging.debug('firing handler')
+            handler(*args,**kwargs)
         return self
 
