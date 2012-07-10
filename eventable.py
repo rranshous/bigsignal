@@ -1,5 +1,8 @@
 import logging
 
+# TODO: use queue's so that events happen in the order
+# they are fired
+
 class Eventable(object):
     """
     base class for object you want to handle events
